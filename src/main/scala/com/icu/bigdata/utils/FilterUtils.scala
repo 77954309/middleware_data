@@ -33,16 +33,16 @@ object FilterUtils {
     * @param line
     * @return
     */
-  def isValidateTime(line:String):Boolean={
+  def changeDateTime(line:String):String={
     val options1 = dateReg1.findFirstMatchIn(line)
     val options2 = dateReg2.findFirstMatchIn(line)
-
-    if(options1.nonEmpty || options2.nonEmpty) {
-      true
-    }else{
-      false
+    var result:String=line
+    if(options1.nonEmpty){
+      result="'"+TimeUtils.strToTimestamp(line).toString+"'"
+    }else if(options2.nonEmpty){
+      result="'"+TimeUtils.strToTimestamp(TimeUtils.dateFormat3.parse(line)).toString+"'"
     }
-
+    result
   }
 
 }

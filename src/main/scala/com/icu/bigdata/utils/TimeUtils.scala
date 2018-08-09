@@ -17,6 +17,7 @@ object TimeUtils {
     "Aug"->8, "Sep"-> 9, "Oct"->10, "Nov"-> 11, "Dec"-> 12)
 
   val dateFormat=new SimpleDateFormat("yyyy-MM-dd")
+  val dateFormat3=new SimpleDateFormat("yyyyMMdd")
   val dateFormat2=new SimpleDateFormat("yyyy.MM.dd")
   val simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
   val calendar=Calendar.getInstance()
@@ -113,6 +114,14 @@ object TimeUtils {
     new Timestamp(DateTime.parse(line).toDate.getTime)
   }
 
+  /**
+    * 字符串转日期
+    * @param line
+    * @return
+    */
+  def strToTimestamp(line:Date):Timestamp={
+    new Timestamp(line.getTime)
+  }
   /**
     * long转换字符串
     * @param line

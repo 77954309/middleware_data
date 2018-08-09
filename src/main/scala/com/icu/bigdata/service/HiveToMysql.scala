@@ -23,6 +23,7 @@ object HiveToMysql {
     */
     def incrementByTime(hive:Hive1,mySql:MySql2): Unit ={
       Data.callCase(mySql)
+      println("add:hive"+hive+" mySql:"+mySql)
       val hiveSpark:SparkSession=Data.callCase(Hive3(hive.warehouseLocation,null)).asInstanceOf[Hive3].sparkSession
       val hiveSql=hiveSpark.sqlContext
       import hiveSql.implicits._
@@ -48,6 +49,7 @@ object HiveToMysql {
     */
     def add(hive:Hive2,mySql:MySql2): Unit ={
       Data.callCase(mySql)
+      println("add:hive"+hive+" mySql:"+mySql)
       val hiveSpark:SparkSession=Data.callCase(Hive3(hive.warehouseLocation,null)).asInstanceOf[Hive3].sparkSession
       val hiveSql=hiveSpark.sqlContext
       import hiveSql.implicits._
