@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+<property>
+          <name>hive.querylog.location</name>
+          <value>/mnt/hadoop/hive/logs</value>
+</property>
+
+<property>  
+  	<name>hive.server2.enable.doAs</name>  
+ 	 <value>false</value>  
+</property>  
+
+
+<property>
+          <name>javax.jdo.option.ConnectionURL</name>
+          <value>jdbc:mysql://bigdata1:3306/hive?createDatabaseIfNotExist=true</value>
+          <description>JDBC connect string for a JDBC metastore</description>
+</property>
+
+<property>
+          <name>javax.jdo.option.ConnectionDriverName</name>
+          <value>com.mysql.jdbc.Driver</value>
+          <description>Driver class name for a JDBC metastore</description>
+</property>
+
+<property>
+          <name>javax.jdo.option.ConnectionUserName</name>
+          <value>root</value>
+          <description>username to use against metastore database</description>
+</property>
+
+<property>
+          <name>javax.jdo.option.ConnectionPassword</name>
+          <value>Root-123</value>
+          <description>password to use against metastore database</description>
+</property>
+<property>
+        <name>hive.zookeeper.quorum</name>
+        <value>47.95.148.210</value>
+</property>
+<property>
+        <name>hive.aux.jars.path</name>
+        <value>file:///mnt/hadoop/hive/lib/hbase-client-1.3.1.jar,file:///mnt/hadoop/hive/lib/hbase-common-1.3.1-tests.jar,file:///mnt/hadoop/hive/lib/hbase-common-1.3.1.jar,file:///mnt/hadoop/hive/lib/hbase-protocol-1.3.1.jar,file:///mnt/hadoop/hive/lib/hbase-server-1.3.1.jar,file:///mnt/hadoop/hive/lib/htrace-core-3.1.0-incubating.jar,file:///mnt/hadoop/hive/lib/guava-14.0.1.jar,file:///mnt/hadoop/hive/lib/zookeeper-3.4.6.jar</value>
+</property>
+
+<property>
+        <name>hive.support.sql11.reserved.keywords</name>
+        <value>false</value>
+</property>
+
+</configuration>

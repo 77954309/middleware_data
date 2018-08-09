@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <!-- 指定hbase在HDFS上存储的路径 -->
+    <property>
+        <name>hbase.rootdir</name>
+        <value>hdfs://bigdata1:9000/hbase</value>
+    </property>
+    <!-- 指定hbase是分布式的 -->
+    <property>
+        <name>hbase.cluster.distributed</name>
+        <value>true</value>
+    </property>
+    <!-- 指定zk的地址，多个用“,”分割 -->
+    <property>
+        <name>hbase.master</name>
+        <value>bigdata1:60010</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.quorum</name>
+        <value>bigdata1</value>
+    </property>
+
+    <property>
+        <name>hbase.zookeeper.property.clientPort</name>
+        <value>2181</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.property.dataDir</name>
+        <value>/mnt/hadoop/zookeeper-3.4.10/tmp</value>
+    </property>
+    <property>
+        <name>phoenix.schema.dropMetaData</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hbase.master.maxclockskew</name>
+        <value>45000000</value>
+    </property>
+    <property>
+        <name>hbase.rpc.timeout</name>
+        <value>36000000</value>
+    </property>
+
+    <property>
+        <name>hbase.client.scanner.timeout.period</name>
+        <value>36000000</value>
+    </property>
+
+    <property>
+        <name>mapreduce.task.timeout</name>
+        <value>1200000</value>
+    </property>
+
+    <property>
+        <name>zookeeper.session.timeout</name>
+        <value>1200000</value>
+    </property>
+
+    <property>
+        <name>hbase.client.write.buffer</name>
+        <value>20971520</value>
+    </property>
+
+
+    <property>
+        <name>hbase.balancer.period</name>
+        <value>300000</value>
+    </property>
+</configuration>
