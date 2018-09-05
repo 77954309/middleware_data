@@ -15,6 +15,9 @@ object FilterUtils {
   val dateReg1:Regex="""^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$""".r
   val dateReg2:Regex="""^[1-9]\d{3}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$""".r
 
+  //匹配数据库账号密码
+  val userReg:Regex="""^[user=]{5}""".r
+  val passwordReg:Regex="""^[password=]{9}""".r
   /**
     * 验证hive分区字段
     * @param line
@@ -45,4 +48,39 @@ object FilterUtils {
     result
   }
 
+  /**
+    * 验证数据账号
+    */
+   def isValidateUserName(line:String):Boolean ={
+      val options1 =userReg.findFirstMatchIn(line)
+      if(options1.nonEmpty){
+        true
+      }else{
+        false
+      }
+   }
+
+  /**
+    * 验证数据密码
+    */
+  def isValidatePassword(line:String):Boolean ={
+    val options1 =passwordReg.findFirstMatchIn(line)
+    if(options1.nonEmpty){
+      true
+    }else{
+      false
+    }
+  }
+
+  /**
+    * 验证日期
+    */
+  def isValidateDate(line:String): Boolean ={
+    val options1 = dateReg1.findFirstMatchIn(line)
+    if(options1.nonEmpty){
+      true
+    }else{
+      false
+    }
+  }
 }

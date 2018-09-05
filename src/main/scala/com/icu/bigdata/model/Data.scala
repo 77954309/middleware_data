@@ -37,9 +37,9 @@ object Data {
   /**
     * mysql
     * @param url 路径带用户密码库名称
-    * @param tableName 表名称
+    * @param sql sql
     */
-  case class MySql1(url:String,tableName:String) extends Data
+  case class MySql1(driver:String,url:String,tableName:String,sql:String) extends Data
 
 
   case class MySqlByTable(tableName:String,columns: String,values:Array[Row]) extends tables
@@ -61,7 +61,7 @@ object Data {
       val sparkSession:SparkSession = SparkUtil.hiveSpark(appName,a)
       Hive3(a,sparkSession)
 
-    case MySql1(a,b)=>println("待续")
+    case MySql1(a,b,c,d)=>SparkUtil.relationDatabase(a,b)
     case MySql2(a,b,c,d)=>SparkUtil.formMysql1(a,b,c)
   }
 }

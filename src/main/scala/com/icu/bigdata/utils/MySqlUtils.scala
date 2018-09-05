@@ -4,6 +4,7 @@ import java.sql.Timestamp
 
 import com.icu.bigdata.model.Data.MySqlByTable
 import com.icu.bigdata.service.HiveToMysql
+import org.apache.spark.sql.DataFrame
 import org.joda.time.DateTime
 import org.slf4j.{Logger, LoggerFactory}
 import scalikejdbc._
@@ -42,4 +43,26 @@ object MySqlUtils {
       }
     }
   }
+
+  /**
+    * 创建临时表
+    * @param df
+    * @param sql
+    */
+  def addModel(df:DataFrame,sql:String): Unit ={
+    df.sqlContext.sql(sql).createOrReplaceTempView("model")
+  }
+
+  /**
+    * 查询所有
+    * @param sql
+    * @return
+    */
+  def queryAll(sql:String):List[Map[String, Any]] ={
+    val maps: List[Map[String, Any]] = DB.readOnly(implicit session =>
+      SQL(sql).map(_.toMap()).list().apply())
+    maps
+  }
+
+
 }

@@ -20,7 +20,7 @@ object TimeUtils {
   val dateFormat3=new SimpleDateFormat("yyyyMMdd")
   val dateFormat2=new SimpleDateFormat("yyyy.MM.dd")
   val simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-  val calendar=Calendar.getInstance()
+  val calendar:Calendar=Calendar.getInstance()
 
   def apply(time: String) ={
     calendar.setTime(simpleDateFormat.parse(time))
@@ -96,6 +96,7 @@ object TimeUtils {
     YearMonthDay(year,monthStr,dayStr)
   }
 
+
   /**
     * 字符串转日期
     * @param line
@@ -103,6 +104,20 @@ object TimeUtils {
     */
   def strToDate(line:String):Date={
     dateFormat.parse(line)
+  }
+
+  /**
+    * 字符串转日期
+    * @param line
+    * @return
+    */
+  def strToYearMonthDay(line:String):YearMonthDay={
+    if(FilterUtils.isValidateDate(line)){
+      calendar.setTime(dateFormat.parse(line))
+      this.getYearMonthDay(0)
+    }else{
+      null
+    }
   }
 
   /**

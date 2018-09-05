@@ -1,7 +1,7 @@
 package com.icu.bigdata.service
 
-import com.icu.bigdata.model.Data._
 import com.icu.bigdata.model.Data
+import com.icu.bigdata.model.Data._
 import com.icu.bigdata.utils._
 import org.apache.spark.sql.SparkSession
 import org.slf4j.{Logger, LoggerFactory}
@@ -23,7 +23,7 @@ object HiveToMysql {
     */
     def incrementByTime(hive:Hive1,mySql:MySql2): Unit ={
       Data.callCase(mySql)
-      println("add:hive"+hive+" mySql:"+mySql)
+      println("incrementByTime:hive"+hive+" mySql:"+mySql)
       val hiveSpark:SparkSession=Data.callCase(Hive3(hive.warehouseLocation,null)).asInstanceOf[Hive3].sparkSession
       val hiveSql=hiveSpark.sqlContext
       import hiveSql.implicits._
@@ -32,7 +32,7 @@ object HiveToMysql {
       val hiveTableName=hive.tableName
       val mySqlTableName=mySql.tableName
 
-      val hivedF=SqlUtil.queryByHiveToPartition(hiveSql,SqlModel1(hiveDbName,hiveTableName,hive.year,hive.month,hive.day))
+      val hivedF=HiveUtil.queryByHiveToPartition(hiveSql,SqlModel1(hiveDbName,hiveTableName,hive.year,hive.month,hive.day))
       val columns=hivedF.columns.filter(f=>FilterUtils.isValidatePartitionLine(f.toString)).mkString(",")
       MySqlUtils.batchSave(MySqlByTable(mySqlTableName,columns,hivedF.collect()))
 
@@ -58,7 +58,7 @@ object HiveToMysql {
       val hiveTableName=hive.tableName
       val mySqlTableName=mySql.tableName
 
-      val hivedF=SqlUtil.queryByHive(hiveSql,SqlModel2(hiveDbName,hiveTableName))
+      val hivedF=HiveUtil.queryByHive(hiveSql,SqlModel2(hiveDbName,hiveTableName))
       val columns=hivedF.columns.filter(f=>FilterUtils.isValidatePartitionLine(f.toString)).mkString(",")
       MySqlUtils.batchSave(MySqlByTable(mySqlTableName,columns,hivedF.collect()))
 
