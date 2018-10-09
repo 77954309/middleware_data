@@ -2,13 +2,9 @@ package com.icu.bigdata.utils
 
 import java.util
 
-import org.apache.spark.SparkContext
-import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SQLContext}
 
-import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 /**
   * sql

@@ -8,16 +8,16 @@ import org.slf4j.{Logger, LoggerFactory}
 import scalikejdbc.ConnectionPool
 
 /**
-  * HIVE导出到mysql
+  * HIVE导出到关系数据库
   * set hive.mapred.mode=nonstrict;关闭严格模式
   * @author limeng
   * @create 2018-08-07 下午3:23
   **/
-object HiveToMysql {
-  val logger: Logger = LoggerFactory.getLogger(HiveToMysql.getClass)
+object ToRelation {
+  val logger: Logger = LoggerFactory.getLogger(ToRelation.getClass)
 
   /**
-    *
+    * 增量
     * @param hive
     * @param mySql
     */
@@ -26,7 +26,6 @@ object HiveToMysql {
       println("incrementByTime:hive"+hive+" mySql:"+mySql)
       val hiveSpark:SparkSession=Data.callCase(Hive3(hive.warehouseLocation,null)).asInstanceOf[Hive3].sparkSession
       val hiveSql=hiveSpark.sqlContext
-      import hiveSql.implicits._
 
       val hiveDbName=hive.dbName
       val hiveTableName=hive.tableName
@@ -52,7 +51,6 @@ object HiveToMysql {
       println("add:hive"+hive+" mySql:"+mySql)
       val hiveSpark:SparkSession=Data.callCase(Hive3(hive.warehouseLocation,null)).asInstanceOf[Hive3].sparkSession
       val hiveSql=hiveSpark.sqlContext
-      import hiveSql.implicits._
 
       val hiveDbName=hive.dbName
       val hiveTableName=hive.tableName

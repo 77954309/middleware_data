@@ -57,7 +57,9 @@ object SparkUtil {
     ConnectionPool.singleton(host, user, password)
   }
 
-
+  /**
+    * 建立关系数据连接
+    */
   def relationDatabase(spark: SQLContext,mySql:MySql1): DataFrame ={
     val urls=mySql.url.split("&")
     val user=urls.filter(line=>FilterUtils.isValidateUserName(line)).map(x=>{x.split(FilterUtils.userReg.regex).last}).mkString

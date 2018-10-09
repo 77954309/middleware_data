@@ -47,11 +47,9 @@ object Data {
   /**
     * mysql
     * @param url url
-    * @param user 用户名称
-    * @param password 密码
     * @param tableName 表名
     */
-  case class MySql2(url:String,user:String,password:String,tableName:String) extends Data
+  case class MySql2(driver:String,url:String,tableName:String) extends Data
 
 
    def callCase(f:Data): Any =f match {
@@ -62,6 +60,6 @@ object Data {
       Hive3(a,sparkSession)
 
     case MySql1(a,b,c,d)=>SparkUtil.relationDatabase(a,b)
-    case MySql2(a,b,c,d)=>SparkUtil.formMysql1(a,b,c)
+    case MySql2(a,b,c)=>SparkUtil.relationDatabase(a,b)
   }
 }

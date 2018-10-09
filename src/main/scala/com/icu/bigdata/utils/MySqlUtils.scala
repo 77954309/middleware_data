@@ -1,11 +1,8 @@
 package com.icu.bigdata.utils
 
-import java.sql.Timestamp
 
 import com.icu.bigdata.model.Data.MySqlByTable
-import com.icu.bigdata.service.HiveToMysql
 import org.apache.spark.sql.DataFrame
-import org.joda.time.DateTime
 import org.slf4j.{Logger, LoggerFactory}
 import scalikejdbc._
 import scalikejdbc.config._
