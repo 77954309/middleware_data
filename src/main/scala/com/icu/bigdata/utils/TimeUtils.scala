@@ -96,6 +96,22 @@ object TimeUtils {
     YearMonthDay(year,monthStr,dayStr)
   }
 
+  def getYearMonth(amount: Int):YearMonthDay={
+    calendar.add(Calendar.DATE, amount)
+    val year=calendar.get(Calendar.YEAR).toString
+    val month=calendar.get(Calendar.MONTH).+(1)
+    val monthStr = {
+      if(month < 10){
+        "0"+month
+      }else{
+        month+""
+      }
+    }
+    val dayStr = ""
+    calendar.add(Calendar.DATE, -amount)
+
+    YearMonthDay(year,monthStr,dayStr)
+  }
 
   /**
     * 字符串转日期
@@ -112,7 +128,12 @@ object TimeUtils {
     * @return
     */
   def strToYearMonthDay(line:String):YearMonthDay={
-    if(FilterUtils.isValidateDate(line)){
+    if(FilterUtils.isValidateDateByMonth(line)){
+      val date=line+"-01"
+      calendar.setTime(dateFormat.parse(date))
+      this.getYearMonth(0)
+
+    }else if(FilterUtils.isValidateDate(line)){
       calendar.setTime(dateFormat.parse(line))
       this.getYearMonthDay(0)
     }else{

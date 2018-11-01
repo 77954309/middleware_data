@@ -11,10 +11,12 @@ import scala.util.matching.Regex
   * @create 2018-08-08 下午4:10
   **/
 object FilterUtils {
-  //2018-01-01  20180101 匹配两种格式
+  //2018-01-01  20180101  2018-01匹配三种格式
   val dateReg1:Regex="""^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$""".r
+
   val dateReg2:Regex="""^[1-9]\d{3}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$""".r
 
+  val dateReg3:Regex="""^[1-9]\d{3}-(0[1-9]|1[0-2])$""".r
   //匹配数据库账号密码
   val userReg:Regex="""^[user=]{5}""".r
   val passwordReg:Regex="""^[password=]{9}""".r
@@ -24,7 +26,7 @@ object FilterUtils {
     * @return
     */
     def isValidatePartitionLine(line:String):Boolean={
-      if(line.equals("year") || line.equals("month") || line.equals("day")){
+      if(line.equals("year") || line.equals("month") || line.equals("day") || line.startsWith("#")){
         false
       }else{
         true
@@ -65,6 +67,19 @@ object FilterUtils {
     */
   def isValidatePassword(line:String):Boolean ={
     val options1 =passwordReg.findFirstMatchIn(line)
+    if(options1.nonEmpty){
+      true
+    }else{
+      false
+    }
+  }
+
+
+  /**
+    * 验证日期 2018-10
+    */
+  def isValidateDateByMonth(line:String): Boolean ={
+    val options1 = dateReg3.findFirstMatchIn(line)
     if(options1.nonEmpty){
       true
     }else{

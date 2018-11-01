@@ -33,7 +33,16 @@ object HiveUtil {
     sqlContext.sql(s"USE ${sqlModel.db}")
     sqlContext.sql("SET hive.exec.dynamic.partition=true")
     sqlContext.sql("SET hive.exec.dynamic.partition.mode=nonstrict")
-    sqlContext.sql(s"select * from ${sqlModel.tableName} where year=${sqlModel.year} and month=${sqlModel.month} and day=${sqlModel.day}").drop("year","month","day")
+    val sqlStringBuilder:StringBuilder=new StringBuilder
+    sqlStringBuilder.append(s"select * from ${sqlModel.tableName} where year=${sqlModel.year}  and month=${sqlModel.month} ")
+
+
+    if(sqlModel.day.nonEmpty){
+      sqlStringBuilder.append(s" and day=${sqlModel.day}")
+      sqlContext.sql(sqlStringBuilder.toString()).drop("year","month","day")
+    }else{
+      sqlContext.sql(sqlStringBuilder.toString()).drop("year","month")
+    }
   }
 
   /**
@@ -86,27 +95,26 @@ object HiveUtil {
     */
   def changeData(desc:Array[Row], dataList:List[Map[String, Any]], sql:SQLContext, view:String): Unit ={
 
-    val fields=desc.map(x=>{ DataTypes.createStructField(x.getString(0), DataTypes.StringType, false)})
+    val fields=desc.filter(f=>FilterUtils.isValidatePartitionLine(f.getString(0)))
+    val fields2=fields.map(x=>{ DataTypes.createStructField(x.getString(0), DataTypes.StringType, false)})
     val newData = new util.ArrayList[Row]
 
     //安照hive数据顺序
     dataList.foreach(f1 => {
-      val value=desc.map(f2 => {
+      val value=fields.map(f2 => {
         var rows:String="null"
         val columnName = f2.getString(0)
-        if (FilterUtils.isValidatePartitionLine(columnName)) {
-          if (f1.get(columnName).mkString.isEmpty) {
+        if (f1.get(columnName).mkString.isEmpty) {
             rows ="null"
-          } else {
+        } else {
             rows =f1.get(columnName).mkString
-          }
         }
         rows
       })
       newData.add(Row.fromSeq(value))
     })
 
-    sql.createDataFrame(newData,DataTypes.createStructType(fields)).createOrReplaceTempView(view)
+    sql.createDataFrame(newData,DataTypes.createStructType(fields2)).createOrReplaceTempView(view)
 
   }
 
